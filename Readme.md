@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юрий Чурсин](https://up.htmlacademy.ru/javascript/17/user/903271).
-* Наставник: `Неизвестно`.
+* Наставник: Евгений Лепёшкин.
 
 ---
 
