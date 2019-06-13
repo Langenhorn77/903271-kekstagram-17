@@ -68,18 +68,7 @@ var fillCommentArray = function (number, array) {
     array.push(comment);
   }
 };
-/*
-var fillArray = function (number, array) {
-  for (var i = 0; i < number; i++) {
-    var photo = {
-      url: PHOTOS[getRandomIndex(0, PHOTOS.length - 1)].url,
-      likes: getRandomIndex(MIN_LIKES, MAX_LIKES),
-      comments: [] //COMMENTS[getRandomIndex(0, COMMENTS.length - 1)]
-      /!*comments: getRandomIndex(MIN_COMMENTS, MAX_COMMENTS) * COMMENTS[2]*!/
-    };
-    array.push(photo);
-  }
-};*/
+
 var fillArray = function (number, array, jmin, jmax) {
   for (var i = 0; i < number; i++) {
     var photo = {
@@ -120,6 +109,3 @@ fillCommentArray(PHOTO_NUMBER, COMMENTS);
 fillArray(PHOTO_NUMBER, PICTURES, MIN_COMMENTS, MAX_COMMENTS);
 addPicture();
 newElement();
-
-/*
-console.log(PICTURES);*/
