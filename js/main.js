@@ -19,6 +19,7 @@
 
   var lastStyle = '';
 
+  // Открытие и закрытие диалогового окна
   upload.addEventListener('change', function (evt) {
     evt.preventDefault();
     openUpload();
