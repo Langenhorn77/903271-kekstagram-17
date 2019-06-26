@@ -35,17 +35,15 @@
       closeUpload();
     }
   };
-
-  var openUpload = function () {
-    uploadOverlay.classList.remove('hidden');
-    document.addEventListener('keydown', onUploadEscPress);
-    slider.classList.add('hidden');
-  };
-
   var closeUpload = function () {
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onUploadEscPress);
     upload.value = '';
+  };
+  var openUpload = function () {
+    uploadOverlay.classList.remove('hidden');
+    document.addEventListener('keydown', onUploadEscPress);
+    slider.classList.add('hidden');
   };
 
   var PROP_NAME = 'filter';
