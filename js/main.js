@@ -38,19 +38,17 @@
 
   var openUpload = function () {
     uploadOverlay.classList.remove('hidden');
-    slider.classList.add('hidden');
     document.addEventListener('keydown', onUploadEscPress);
+    slider.classList.add('hidden');
   };
 
   var closeUpload = function () {
     uploadOverlay.classList.add('hidden');
-    upload.value = '';
     document.removeEventListener('keydown', onUploadEscPress);
+    upload.value = '';
   };
 
-
   var PROP_NAME = 'filter';
-
   var FILTER_CLASSES = {
     classN: [
       'effects__preview--chrome',
