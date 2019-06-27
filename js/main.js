@@ -19,6 +19,7 @@
 
   var lastStyle = '';
 
+  // Открытие и закрытие диалогового окна
   upload.addEventListener('change', function (evt) {
     evt.preventDefault();
     openUpload();
@@ -34,22 +35,18 @@
       closeUpload();
     }
   };
-
-  var openUpload = function () {
-    uploadOverlay.classList.remove('hidden');
-    slider.classList.add('hidden');
-    document.addEventListener('keydown', onUploadEscPress);
-  };
-
   var closeUpload = function () {
     uploadOverlay.classList.add('hidden');
-    upload.value = '';
     document.removeEventListener('keydown', onUploadEscPress);
+    upload.value = '';
+  };
+  var openUpload = function () {
+    uploadOverlay.classList.remove('hidden');
+    document.addEventListener('keydown', onUploadEscPress);
+    slider.classList.add('hidden');
   };
 
-
   var PROP_NAME = 'filter';
-
   var FILTER_CLASSES = {
     classN: [
       'effects__preview--chrome',
