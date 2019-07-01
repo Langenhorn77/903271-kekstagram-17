@@ -26,4 +26,9 @@ window.utils = {
       el.classList.remove(styleN);
     }
   },
+
+  // Получение координат элемента
+  getCoords: function (el) {
+    return el.getBoundingClientRect();
+  },
 };
