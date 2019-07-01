@@ -14,7 +14,7 @@
 
   var slider = document.querySelector('.effect-level');
   var line = document.querySelector('.effect-level__line');
-  var effectPin = document.querySelector('.effect-level__pin');
+  var pin = document.querySelector('.effect-level__pin');
   var depth = document.querySelector('.effect-level__depth');
 
   var lastStyle = '';
@@ -82,26 +82,43 @@
 
   var movePinMax = function () {
     slider.classList.remove('hidden');
-    effectPin.style.left = '100%';
+    pin.style.left = '100%';
     depth.style.width = '100%';
   };
 
-  // Управление пином слайдера
+  var getCoords = function (el) {
+    return el.getBoundingClientRect();
+  };
 
-  line.addEventListener('mouseup', function (evt) {
-    evt.preventDefault();
-    var rect = line.getBoundingClientRect(); // узнаем размер элемента (длины слайдера)
-    var a = evt.clientX - rect.left; // узнаем размер перемещения
-    var x = (a / rect.width); // узнаем долю перемещения
-    effectPin.style.left = x * 100 + '%';
-    depth.style.width = x * 100 + '%';
-    var effectLevel = x.toFixed(1);
-
-    for (var i = 0; i < FILTER_CLASSES.classN.length; i++) {
-      if (window.utils.findMatch(image, FILTER_CLASSES.classN[i])) {
-        window.utils.changeStyle(image, PROP_NAME, FILTER_CLASSES.val[i] + effectLevel * FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
+  pin.addEventListener('mousedown', function (evt) {
+    var pinCoords = getCoords(pin);
+    var shiftX = evt.pageX - pinCoords.left;
+    var sliderCoords = getCoords(line);
+    var movePin = function (ev) {
+      var newLeft = ev.pageX - shiftX - sliderCoords.left;
+      if (newLeft < 0) {
+        newLeft = 0;
       }
-    }
+      var rightEdge = line.offsetWidth;
+      if (newLeft > rightEdge) {
+        newLeft = rightEdge;
+      }
+      var x = newLeft / sliderCoords.width;
+      pin.style.left = depth.style.width = x * 100 + '%';
+
+      var effectLevel = x.toFixed(2);
+      for (var i = 0; i < FILTER_CLASSES.classN.length; i++) {
+        if (window.utils.findMatch(image, FILTER_CLASSES.classN[i])) {
+          window.utils.changeStyle(image, PROP_NAME, FILTER_CLASSES.val[i] + effectLevel * FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
+        }
+      }
+    };
+
+    slider.addEventListener('mousemove', movePin);
+    slider.addEventListener('mouseup', function (ev) {
+      movePin(ev);
+      slider.removeEventListener('mousemove', movePin);
+    });
   });
 
   effectList.addEventListener('click', function (evt) {
