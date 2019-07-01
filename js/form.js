@@ -1,5 +1,4 @@
 'use strict';
-
 (function () {
   var PROP_NAME = 'filter';
   var FILTER_CLASSES = {

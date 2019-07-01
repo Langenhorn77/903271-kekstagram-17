@@ -9,7 +9,6 @@
   window.dialog = {
     slider: document.querySelector('.effect-level'),
   };
-
   // Открытие и закрытие диалогового окна
   upload.addEventListener('change', function (evt) {
     evt.preventDefault();
