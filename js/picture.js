@@ -1,5 +1,4 @@
 'use strict';
-
 // Рендер фотографий
 (function () {
   var pictureTemplate = document.getElementById('picture')

@@ -8,22 +8,24 @@ window.utils = {
   },
 
   // Проверка наличия
-
   findMatch: function (el, classN) {
     return (el.classList.contains(classN));
   },
 
   // Изменение стиля
-
   changeStyle: function (el, styleN, val) {
     return el.style.setProperty(styleN, val);
   },
 
   // Удаление класса
-
   removeStyle: function (el, styleN) {
     if (!(styleN === '')) {
       el.classList.remove(styleN);
     }
+  },
+
+  // Получение координат элемента
+  getCoords: function (el) {
+    return el.getBoundingClientRect();
   },
 };
