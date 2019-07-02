@@ -28,4 +28,9 @@ window.utils = {
   getCoords: function (el) {
     return el.getBoundingClientRect();
   },
+
+  // Функия создания нового элемента
+  newElement: function (el, arg) {
+    el.appendChild(arg);
+  }
 };

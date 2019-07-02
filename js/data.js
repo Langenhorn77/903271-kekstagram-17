@@ -27,7 +27,6 @@
     'Юрий',
   ];
 
-  var PHOTO_NUMBER = 25;
   var AVATAR_NUMBER = 6;
   var MIN_LIKES = 15;
   var MAX_LIKES = 200;
@@ -35,6 +34,7 @@
   var MAX_COMMENTS = 20;
 
   window.data = {
+    PHOTO_NUMBER: 25,
     pictures: [],
 
     fillCommentArray: function () {
@@ -57,7 +57,7 @@
     },
 
     fillArray: function () {
-      for (var i = 0; i < PHOTO_NUMBER; i++) {
+      for (var i = 0; i < window.data.PHOTO_NUMBER; i++) {
         window.data.pictures.push({
           url: 'photos/' + (i + 1) + '.jpg',
           likes: window.utils.getRandomIndex(MIN_LIKES, MAX_LIKES),
