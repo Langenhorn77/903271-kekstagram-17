@@ -19,13 +19,15 @@
     return pictureElement;
   };
 
-  var addPicture = function () {
-    for (var i = 0; i < window.data.pictures.length; i++) {
-      fragment.appendChild(renderPicture(window.data.pictures[i]));
+  var addPicture = function (array, length) {
+    for (var i = 0; i < window.data.PHOTO_NUMBER; i++) {
+      fragment.appendChild(renderPicture(array[window.utils.getRandomIndex(0, length - 1)]));
     }
-
-    picturesListElement.appendChild(fragment);
   };
 
-  addPicture();
+  var successHandler = function (array) {
+    addPicture(array, array.length);
+    window.utils.newElement(picturesListElement, fragment);
+  };
+  window.backend.load(successHandler, window.backend.errorHandler);
 })();
