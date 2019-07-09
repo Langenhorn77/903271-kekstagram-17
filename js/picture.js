@@ -5,8 +5,6 @@
     .content
     .querySelector('.picture');
 
-  var picturesListElement = document.querySelector('.pictures');
-
   var fragment = document.createDocumentFragment();
 
   var renderPicture = function (picture) {
@@ -20,14 +18,17 @@
   };
 
   var addPicture = function (array, length) {
-    for (var i = 0; i < window.data.PHOTO_NUMBER; i++) {
-      fragment.appendChild(renderPicture(array[window.utils.getRandomIndex(0, length - 1)]));
+    for (var i = 0; i < length; i++) {
+      fragment.appendChild(renderPicture(array[i]));
     }
   };
 
-  var successHandler = function (array) {
-    addPicture(array, array.length);
-    window.utils.newElement(picturesListElement, fragment);
+  window.picture = {
+    picturesListElement: document.querySelector('.pictures'),
+
+    renderUserPictures: function (array, length) {
+      addPicture(array, length);
+      window.utils.newElement(window.picture.picturesListElement, fragment);
+    },
   };
-  window.backend.load(successHandler, window.backend.errorHandler);
 })();

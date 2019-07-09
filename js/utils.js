@@ -31,6 +31,13 @@ window.utils = {
 
   // Функия создания нового элемента
   newElement: function (el, arg) {
-    el.appendChild(arg);
+    return el.appendChild(arg);
+  },
+
+  debounce: function (cb, timeout, interval) {
+    if (timeout) {
+      window.clearTimeout(timeout);
+    }
+    timeout = window.setTimeout(cb, interval);
   }
 };
