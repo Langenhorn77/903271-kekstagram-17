@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var TIMEOUT = 10000;
+  var TIMEOUT = 20000;
   var STATUS_CODE = 200;
   var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
   var xhr;
