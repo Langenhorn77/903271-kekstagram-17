@@ -34,10 +34,11 @@ window.utils = {
     return el.appendChild(arg);
   },
 
+  // Устранение дребезга
   debounce: function (cb, timeout, interval) {
     if (timeout) {
       window.clearTimeout(timeout);
     }
     timeout = window.setTimeout(cb, interval);
-  }
+  },
 };

@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var pictures = [];
   var filterButtons = document.querySelectorAll('.img-filters__button');
   var popularButton = document.getElementById('filter-popular');
   var newButton = document.getElementById('filter-new');
@@ -13,11 +12,22 @@
   var NEW_PHOTOS = 10;
   var DEBOUNCE_INTERVAL = 500;
 
+  window.filter = {
+    pictures: [],
+    littlePicturesArray: [],
+    status: false,
+  };
   var removePictures = function () {
     var element = window.picture.picturesListElement.querySelectorAll('.picture');
     Array.prototype.forEach.call(element, function (node) {
       node.parentNode.removeChild(node);
     });
+  };
+
+  var makePictureClickable = function () {
+    var elems = window.picture.picturesListElement.querySelectorAll('.picture');
+    window.filter.littlePicturesArray = Array.prototype.slice.call(elems);
+    window.dialog.clickPictureHandler();
   };
 
   var toggleButtons = function (evt) {
@@ -48,11 +58,12 @@
   });
 
   var showPopularPhotos = function () {
-    window.picture.renderUserPictures(pictures, window.data.PHOTO_NUMBER);
+    window.picture.renderUserPictures(window.filter.pictures, window.data.PHOTO_NUMBER);
+    makePictureClickable();
   };
 
   var showNewPhotos = function () {
-    var newPhotos = pictures.slice();
+    var newPhotos = window.filter.pictures.slice();
     var randomPhotos = [];
     for (var j = 0; j < window.data.PHOTO_NUMBER; j++) {
       randomPhotos[j] = newPhotos[window.utils.getRandomIndex(0, window.data.PHOTO_NUMBER - 1)];
@@ -62,20 +73,23 @@
         return randomPhotos.indexOf(it) === i;
       });
     window.picture.renderUserPictures(uniquePhotos, NEW_PHOTOS);
+    makePictureClickable();
   };
 
   var showDiscussedPhotos = function () {
-    var discussedPhotos = pictures.slice();
+    var discussedPhotos = window.filter.pictures.slice();
     discussedPhotos.sort(function (a, b) {
       return b.comments.length - a.comments.length;
     });
     window.picture.renderUserPictures(discussedPhotos, window.data.PHOTO_NUMBER);
+    makePictureClickable();
   };
 
   var successHandler = function (array) {
-    pictures = array.slice();
+    window.filter.pictures = array.slice();
     window.picture.renderUserPictures(array, window.data.PHOTO_NUMBER);
     filterImage.classList.remove('img-filters--inactive');
+    makePictureClickable();
   };
   window.backend.load(successHandler, window.backend.errorHandler);
 })();
