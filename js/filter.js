@@ -1,72 +1,57 @@
 'use strict';
 
 (function () {
-  var filterButtons = document.querySelectorAll('.img-filters__button');
-  var popularButton = document.getElementById('filter-popular');
-  var newButton = document.getElementById('filter-new');
-  var discussedButton = document.getElementById('filter-discussed');
-  var activeButtonClass = 'img-filters__button--active';
-
-  var lastTimeout = '';
   var NEW_PHOTOS = 10;
   var DEBOUNCE_INTERVAL = 500;
+  var lastTimeout = '';
+  var filtersForm = document.querySelector('.img-filters__form');
+  var activeButtonClass = 'img-filters__button--active';
+
+  var photoArray = [];
+
+  var filterRules = {
+    'filter-popular': function () {
+      window.picture.renderUserPhotos(photoArray.slice(0, window.picture.PHOTO_NUMBER));
+    },
+    'filter-new': function () {
+      var newPhotos = photoArray.slice();
+      window.picture.renderUserPhotos(window.utils.shuffleArray(newPhotos).slice(0, NEW_PHOTOS));
+    },
+    'filter-discussed': function () {
+      var discussedPhotos = photoArray.slice();
+      discussedPhotos.sort(function (a, b) {
+        return b.comments.length - a.comments.length;
+      });
+      window.picture.renderUserPhotos(discussedPhotos, window.picture.PHOTO_NUMBER);
+    },
+  };
 
   var removePictures = function () {
-    var element = window.picture.picturesListElement.querySelectorAll('.picture');
-    Array.prototype.forEach.call(element, function (node) {
+    var elements = window.picture.photoListElement.querySelectorAll('.picture');
+    elements.forEach(function (node) {
       node.parentNode.removeChild(node);
     });
   };
 
   var toggleButtons = function (evt) {
-    if (!evt.target.classList.contains(activeButtonClass)) {
-      [].forEach.call(filterButtons, function (el) {
-        el.classList.remove(activeButtonClass);
-      });
-      evt.target.classList.add(activeButtonClass);
+    var lastButton = filtersForm.querySelector('.img-filters__button--active');
+    lastButton.classList.remove(activeButtonClass);
+    evt.target.classList.add(activeButtonClass);
+  };
+
+  var onFilterFormChange = function (evt) {
+    if (evt.target.tagName === 'BUTTON') {
+      toggleButtons(evt);
+      removePictures();
+      window.utils.debounce(filterRules[evt.target.id], lastTimeout, DEBOUNCE_INTERVAL);
     }
   };
 
-  popularButton.addEventListener('click', function (evt) {
-    toggleButtons(evt);
-    removePictures();
-    window.utils.debounce(showPopularPhotos, lastTimeout, DEBOUNCE_INTERVAL);
-  });
-
-  newButton.addEventListener('click', function (evt) {
-    toggleButtons(evt);
-    removePictures();
-    window.utils.debounce(showNewPhotos, lastTimeout, DEBOUNCE_INTERVAL);
-  });
-
-  discussedButton.addEventListener('click', function (evt) {
-    toggleButtons(evt);
-    removePictures();
-    window.utils.debounce(showDiscussedPhotos, lastTimeout, DEBOUNCE_INTERVAL);
-  });
-
-  var showPopularPhotos = function () {
-    window.picture.renderUserPictures(window.picture.photoArray, window.data.PHOTO_NUMBER);
+  var successHandler = function (array) {
+    photoArray = array.slice();
+    window.picture.renderUserPhotos(photoArray.slice(0, window.picture.PHOTO_NUMBER));
+    window.picture.filterImage.classList.remove('img-filters--inactive');
   };
-
-  var showNewPhotos = function () {
-    var newPhotos = window.picture.photoArray.slice();
-    var randomPhotos = [];
-    for (var j = 0; j < window.data.PHOTO_NUMBER; j++) {
-      randomPhotos[j] = newPhotos[window.utils.getRandomIndex(0, window.data.PHOTO_NUMBER - 1)];
-    }
-    var uniquePhotos =
-      randomPhotos.filter(function (it, i) {
-        return randomPhotos.indexOf(it) === i;
-      });
-    window.picture.renderUserPictures(uniquePhotos, NEW_PHOTOS);
-  };
-
-  var showDiscussedPhotos = function () {
-    var discussedPhotos = window.picture.photoArray.slice();
-    discussedPhotos.sort(function (a, b) {
-      return b.comments.length - a.comments.length;
-    });
-    window.picture.renderUserPictures(discussedPhotos, window.data.PHOTO_NUMBER);
-  };
+  window.backend.load(successHandler, window.backend.errorHandler);
+  filtersForm.addEventListener('click', onFilterFormChange);
 })();

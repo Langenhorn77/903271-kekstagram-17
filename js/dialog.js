@@ -7,6 +7,8 @@
   var uploadOverlay = document.querySelector('.img-upload__overlay');
   var uploadCancel = document.querySelector('.img-upload__cancel');
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
+  var picturePopup = document.querySelector('.big-picture');
+  var slider = document.querySelector('.effect-level');
 
   // Открытие и закрытие окна редактирования
   var onUploadEscPress = function (evt) {
@@ -21,6 +23,12 @@
     window.dialog.slider.classList.add('hidden');
   };
 
+  var closeUpload = function () {
+    uploadOverlay.classList.add('hidden');
+    document.removeEventListener('keydown', onUploadEscPress);
+    upload.value = '';
+  };
+
   upload.addEventListener('change', function (evt) {
     evt.preventDefault();
     openUpload();
@@ -32,9 +40,14 @@
   });
 
   // Закрытие окна большой фотографии
+  var onPhotoEscPress = function (evt) {
+    if ((evt.keyCode === ESC_KEYCODE) && !evt.target.classList.contains('social__footer-text')) {
+      closeBigPicture();
+    }
+  };
 
   var closeBigPicture = function () {
-    window.dialog.pictureDialog.classList.add('hidden');
+    window.dialog.picturePopup.classList.add('hidden');
     document.removeEventListener('keydown', window.dialog.onPhotoEscPress);
   };
 
@@ -44,19 +57,10 @@
   });
 
   window.dialog = {
-    slider: document.querySelector('.effect-level'),
-    pictureDialog: document.querySelector('.big-picture'),
+    slider: slider,
+    picturePopup: picturePopup,
 
-    closeUpload: function () {
-      uploadOverlay.classList.add('hidden');
-      document.removeEventListener('keydown', onUploadEscPress);
-      upload.value = '';
-    },
-
-    onPhotoEscPress: function (evt) {
-      if ((evt.keyCode === ESC_KEYCODE) && !evt.target.classList.contains('social__footer-text')) {
-        closeBigPicture();
-      }
-    },
+    closeUpload: closeUpload,
+    onPhotoEscPress: onPhotoEscPress
   };
 })();
