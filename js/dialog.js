@@ -6,31 +6,27 @@
   var upload = document.getElementById('upload-file');
   var uploadOverlay = document.querySelector('.img-upload__overlay');
   var uploadCancel = document.querySelector('.img-upload__cancel');
-
-  var bigPicture = document.querySelector('.big-picture');
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
+  var picturePopup = document.querySelector('.big-picture');
+  var slider = document.querySelector('.effect-level');
 
-  window.dialog = {
-    slider: document.querySelector('.effect-level'),
-    bigPicture: document.querySelector('.big-picture')
-  };
   // Открытие и закрытие окна редактирования
-  var onDialogEscPress = function (evt) {
-    if ((evt.keyCode === ESC_KEYCODE) && !evt.target.classList.contains('text__description')) {
-      closeUpload();
-    } else if ((evt.keyCode === ESC_KEYCODE) && !evt.target.classList.contains('social__footer-text')) {
-      closeBigPicture();
+  var onUploadEscPress = function (evt) {
+    if ((evt.keyCode === ESC_KEYCODE) && ((!evt.target.classList.contains('text__description')) && (!evt.target.classList.contains('text__hashtags')))) {
+      window.dialog.closeUpload();
     }
   };
-  var closeUpload = function () {
-    uploadOverlay.classList.add('hidden');
-    document.removeEventListener('keydown', onDialogEscPress);
-    upload.value = '';
-  };
+
   var openUpload = function () {
     uploadOverlay.classList.remove('hidden');
-    document.addEventListener('keydown', onDialogEscPress);
+    document.addEventListener('keydown', onUploadEscPress);
     window.dialog.slider.classList.add('hidden');
+  };
+
+  var closeUpload = function () {
+    uploadOverlay.classList.add('hidden');
+    document.removeEventListener('keydown', onUploadEscPress);
+    upload.value = '';
   };
 
   upload.addEventListener('change', function (evt) {
@@ -40,17 +36,31 @@
 
   uploadCancel.addEventListener('click', function (evt) {
     evt.preventDefault();
-    closeUpload();
+    window.dialog.closeUpload();
   });
 
-  // Открытие и закрытие окна большой фотографии
+  // Закрытие окна большой фотографии
+  var onPhotoEscPress = function (evt) {
+    if ((evt.keyCode === ESC_KEYCODE) && !evt.target.classList.contains('social__footer-text')) {
+      closeBigPicture();
+    }
+  };
+
   var closeBigPicture = function () {
-    bigPicture.classList.add('hidden');
-    document.removeEventListener('keydown', onDialogEscPress);
+    window.dialog.picturePopup.classList.add('hidden');
+    document.removeEventListener('keydown', window.dialog.onPhotoEscPress);
   };
 
   bigPictureCancel.addEventListener('click', function (evt) {
     evt.preventDefault();
     closeBigPicture();
   });
+
+  window.dialog = {
+    slider: slider,
+    picturePopup: picturePopup,
+
+    closeUpload: closeUpload,
+    onPhotoEscPress: onPhotoEscPress
+  };
 })();
