@@ -53,5 +53,17 @@ window.utils = {
       array[j] = x;
     }
     return array;
-  }
+  },
+
+  testUnique: function (array) {
+    var n = array.length;
+    for (var i = 0; i < n - 1; i++) {
+      for (var j = i + 1; j < n; j++) {
+        if (array[i] === array[j]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  },
 };
