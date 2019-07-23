@@ -56,9 +56,9 @@ window.utils = {
   },
 
   testUnique: function (array) {
-    var n = array.length;
-    for (var i = 0; i < n - 1; i++) {
-      for (var j = i + 1; j < n; j++) {
+    var l = array.length;
+    for (var i = 0; i < l - 1; i++) {
+      for (var j = i + 1; j < l; j++) {
         if (array[i] === array[j]) {
           return false;
         }

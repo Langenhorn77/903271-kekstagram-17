@@ -46,7 +46,7 @@
     // Получаем общий текст сообщений об ошибках
     getInvalidities: function () {
       return this.invalidities.join('. \n');
-    },
+    }
   };
 
   var validation = function (evt) {
