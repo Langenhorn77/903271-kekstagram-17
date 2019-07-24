@@ -55,15 +55,9 @@ window.utils = {
     return array;
   },
 
-  testUnique: function (array) {
-    var l = array.length;
-    for (var i = 0; i < l - 1; i++) {
-      for (var j = i + 1; j < l; j++) {
-        if (array[i] === array[j]) {
-          return false;
-        }
-      }
-    }
-    return true;
+  getUniqueElements: function (array) {
+    return array.some(function (value) {
+      return array.indexOf(value) !== array.lastIndexOf(value);
+    });
   },
 };

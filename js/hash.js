@@ -1,13 +1,18 @@
 'use strict';
 
 (function () {
+  var HASHTAGS_NUMBER = 5;
+  var HASHTAG_MAX_LENGTH = 19;
   var uploadForm = document.querySelector('.img-upload__form');
   var hashtagInput = uploadForm.querySelector('.text__hashtags');
 
-  var reg = /^#[a-zа-яё]{1,19}$/i;
+  var hashtagsRules = {
+    'startString': /^#/,
+    'startLength': /^#?\w/,
+    'space': /\w+#+/
+  };
 
   var CustomValidation = function () {
-
   };
 
   CustomValidation.prototype = {
@@ -15,22 +20,37 @@
 
     checkValidity: function () {
       var result = true;
-      var hashtagArray = hashtagInput.value.trim().split(/\s+/);
+      var hashtagArray = hashtagInput.value.toLowerCase().trim().split(/\s+/);
       if (!(hashtagArray[0] === '')) {
-        if (!(hashtagArray.length <= 5)) {
+        if (!(hashtagArray.length <= HASHTAGS_NUMBER)) {
           var max = hashtagArray.length;
-          this.addInvalidity('Количество хеш-тегов должно быть меньше 6, сейчас ' + max + '!');
+          this.addInvalidity('Нельзя указать больше 5 хэш-тегов, сейчас ' + max + '!');
           result = false;
         }
 
-        if (!window.utils.testUnique(hashtagArray)) {
+        if (window.utils.getUniqueElements(hashtagArray)) {
           this.addInvalidity('Хеш-теги не должны повторяться!');
           result = false;
         }
 
         for (var j = 0; j < hashtagArray.length; j++) {
-          if (!hashtagArray[j].match(reg)) {
-            this.addInvalidity('Один из хештегов введен неправильно!');
+          if (!hashtagArray[j].match(hashtagsRules.startString)) {
+            this.addInvalidity('Хештег должен начинаться с символа решетки!');
+            result = false;
+          }
+
+          if (!hashtagArray[j].match(hashtagsRules.startLength)) {
+            this.addInvalidity('Хештег не может состоять только из одного символа!');
+            result = false;
+          }
+
+          if (hashtagArray[j].length > HASHTAG_MAX_LENGTH) {
+            this.addInvalidity('Максимальная длина одного хэш-тега 20 символов, включая решётку!');
+            result = false;
+          }
+
+          if (hashtagArray[j].match(hashtagsRules.space)) {
+            this.addInvalidity('Хеш-теги разделяются пробелами!');
             result = false;
           }
         }
@@ -42,11 +62,6 @@
     addInvalidity: function (message) {
       this.invalidities.push(message);
     },
-
-    // Получаем общий текст сообщений об ошибках
-    getInvalidities: function () {
-      return this.invalidities.join('. \n');
-    }
   };
 
   var validation = function (evt) {
@@ -59,15 +74,13 @@
   };
 
   CustomValidation.prototype.getInvaliditiesForHTML = function () {
-    return this.invalidities.join('. <br>');
+    return this.invalidities.join('<br>');
   };
 
   uploadForm.addEventListener('submit', function (evt) {
     var inputCustomValidation = new CustomValidation(); // Создадим объект CustomValidation
     var isIncorrect = !inputCustomValidation.checkValidity(hashtagInput);
     if (isIncorrect) {
-      var customValidityMessage = inputCustomValidation.getInvalidities(); // Получим все сообщения об ошибках
-      hashtagInput.setCustomValidity(customValidityMessage); // Установим специальное сообщение об ошибке
       var customValidityMessageForHTML = inputCustomValidation.getInvaliditiesForHTML();
       hashtagInput.insertAdjacentHTML('afterend', '<p class="error-message">' + customValidityMessageForHTML + '</p>');
       evt.preventDefault();
