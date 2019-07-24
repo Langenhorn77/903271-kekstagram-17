@@ -53,5 +53,11 @@ window.utils = {
       array[j] = x;
     }
     return array;
-  }
+  },
+
+  getUniqueElements: function (array) {
+    return array.some(function (value) {
+      return array.indexOf(value) !== array.lastIndexOf(value);
+    });
+  },
 };
