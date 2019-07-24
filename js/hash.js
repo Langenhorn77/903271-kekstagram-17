@@ -68,7 +68,9 @@
     if (!(evt.target.value === '')) {
       evt.target.setCustomValidity('');
       var errorElement = uploadForm.querySelector('.error-message');
-      errorElement.innerHTML = '';
+      if (errorElement) {
+        errorElement.remove();
+      }
       CustomValidation.prototype.invalidities = [];
     }
   };
