@@ -8,8 +8,8 @@
 
   var hashtagsRules = {
     'startString': /^#/,
-    'startLength': /^#?\w/,
-    'space': /\w+#+/
+    'startLength': /^#?[\wа-я]/,
+    'space': /[\wа-я]+#+/
   };
 
   var CustomValidation = function () {
@@ -78,16 +78,12 @@
   CustomValidation.prototype.getInvaliditiesForHTML = function () {
     return this.invalidities.join('<br>');
   };
-
-  uploadForm.addEventListener('submit', function (evt) {
-    var inputCustomValidation = new CustomValidation(); // Создадим объект CustomValidation
-    var isIncorrect = !inputCustomValidation.checkValidity(hashtagInput);
-    if (isIncorrect) {
-      var customValidityMessageForHTML = inputCustomValidation.getInvaliditiesForHTML();
-      hashtagInput.insertAdjacentHTML('afterend', '<p class="error-message">' + customValidityMessageForHTML + '</p>');
-      evt.preventDefault();
-    }
-  });
   hashtagInput.addEventListener('input', validation);
+
+  window.hash = {
+    uploadForm: uploadForm,
+    hashtagInput: hashtagInput,
+    CustomValidation: CustomValidation,
+  };
 
 })();

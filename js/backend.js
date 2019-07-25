@@ -4,6 +4,7 @@
   var TIMEOUT = 20000;
   var STATUS_CODE = 200;
   var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
+  var URL_SAVE = 'https://js.dump.academy/kekstagram';
   var xhr;
 
   var useServer = function (onLoad, onError) {
@@ -35,17 +36,10 @@
       xhr.send();
     },
 
-    errorHandler: function (errorMessage) {
-      var node = document.createElement('div');
-      node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: yellow;';
-      node.style.position = 'absolute';
-      node.style.left = 0;
-      node.style.right = 0;
-      node.style.fontSize = '25px';
-      node.style.color = 'black';
-
-      node.textContent = errorMessage;
-      document.body.insertAdjacentElement('afterbegin', node);
-    },
+    save: function (success, fail, formData) {
+      useServer(success, fail);
+      xhr.open('POST', URL_SAVE);
+      xhr.send(formData);
+    }
   };
 })();

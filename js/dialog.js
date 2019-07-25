@@ -10,6 +10,7 @@
   var picturePopup = document.querySelector('.big-picture');
   var slider = document.querySelector('.effect-level');
 
+
   // Открытие и закрытие окна редактирования
   var onUploadEscPress = function (evt) {
     if ((evt.keyCode === ESC_KEYCODE) && ((!evt.target.classList.contains('text__description')) && (!evt.target.classList.contains('text__hashtags')))) {
@@ -57,8 +58,10 @@
   });
 
   window.dialog = {
+    ESC_KEYCODE: ESC_KEYCODE,
     slider: slider,
     picturePopup: picturePopup,
+    uploadOverlay: uploadOverlay,
 
     closeUpload: closeUpload,
     onPhotoEscPress: onPhotoEscPress
