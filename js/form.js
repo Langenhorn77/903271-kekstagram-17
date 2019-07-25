@@ -31,7 +31,6 @@
       ')',
     ],
   };
-  var image = document.querySelector('.img-upload__preview');
   var effectList = document.querySelector('.effects__list');
   var line = document.querySelector('.effect-level__line');
   var pin = document.querySelector('.effect-level__pin');
@@ -64,8 +63,8 @@
 
       var effectLevel = x.toFixed(2);
       for (var i = 0; i < FILTER_CLASSES.classN.length; i++) {
-        if (window.utils.findMatch(image, FILTER_CLASSES.classN[i])) {
-          window.utils.changeStyle(image, PROP_NAME, FILTER_CLASSES.val[i] + effectLevel * FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
+        if (window.utils.findMatch(window.dialog.image, FILTER_CLASSES.classN[i])) {
+          window.utils.changeStyle(window.dialog.image, PROP_NAME, FILTER_CLASSES.val[i] + effectLevel * FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
         }
       }
     };
@@ -77,24 +76,25 @@
     });
   });
 
-  effectList.addEventListener('click', function (evt) {
+  var onFilterPreviewChange = function (evt) {
     evt.preventDefault();
     var target = evt.target;
     if (window.utils.findMatch(target, 'effects__preview--none')) {
-      window.utils.removeStyle(image, lastStyle);
+      window.utils.removeStyle(window.dialog.image, lastStyle);
       lastStyle = '';
       window.dialog.slider.classList.add('hidden');
-      image.style.removeProperty('filter');
+      window.dialog.image.style.removeProperty('filter');
     } else {
       for (var i = 0; i < FILTER_CLASSES.classN.length; i++) {
         if (window.utils.findMatch(target, FILTER_CLASSES.classN[i])) {
-          window.utils.removeStyle(image, lastStyle);
+          window.utils.removeStyle(window.dialog.image, lastStyle);
           lastStyle = FILTER_CLASSES.classN[i];
-          image.classList.add(lastStyle);
-          window.utils.changeStyle(image, PROP_NAME, FILTER_CLASSES.val[i] + FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
+          window.dialog.image.classList.add(lastStyle);
+          window.utils.changeStyle(window.dialog.image, PROP_NAME, FILTER_CLASSES.val[i] + FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
           movePinMax();
         }
       }
     }
-  });
+  };
+  effectList.addEventListener('click', onFilterPreviewChange);
 })();

@@ -9,7 +9,7 @@
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
   var picturePopup = document.querySelector('.big-picture');
   var slider = document.querySelector('.effect-level');
-
+  var image = document.querySelector('.img-upload__preview');
 
   // Открытие и закрытие окна редактирования
   var onUploadEscPress = function (evt) {
@@ -28,6 +28,9 @@
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onUploadEscPress);
     upload.value = '';
+    image.className = '';
+    image.classList.add('img-upload__preview');
+    image.style.removeProperty('filter');
   };
 
   upload.addEventListener('change', function (evt) {
@@ -60,6 +63,7 @@
   window.dialog = {
     ESC_KEYCODE: ESC_KEYCODE,
     slider: slider,
+    image: image,
     picturePopup: picturePopup,
     uploadOverlay: uploadOverlay,
 

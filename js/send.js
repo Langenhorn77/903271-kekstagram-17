@@ -66,4 +66,5 @@
       window.backend.save(sendFormSuccessHandler, sendFormErrorHandler, new FormData(window.hash.uploadForm));
     }
   });
+
 })();
