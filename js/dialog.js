@@ -16,7 +16,7 @@
     var newImage = image.children[0];
     var pathToPicture = window.dialog.upload.value.split('\\');
 
-    newImage.setAttribute('src', 'http://localhost:63342/903271-kekstagram-17/img/' + pathToPicture[pathToPicture.length - 1]);
+    newImage.setAttribute('src', './img/' + pathToPicture[pathToPicture.length - 1]);
     newImage.setAttribute('width', '586');
     newImage.setAttribute('height', '587');
   };
