@@ -9,7 +9,17 @@
   var bigPictureCancel = document.querySelector('.big-picture__cancel');
   var picturePopup = document.querySelector('.big-picture');
   var slider = document.querySelector('.effect-level');
-  var image = document.querySelector('.img-upload__preview');
+  var imageName = 'img-upload__preview';
+  var image = document.querySelector('.' + imageName);
+
+  var loadImg = function () {
+    var newImage = image.children[0];
+    var pathToPicture = window.dialog.upload.value.split('\\');
+
+    newImage.setAttribute('src', 'http://localhost:63342/903271-kekstagram-17/img/' + pathToPicture[pathToPicture.length - 1]);
+    newImage.setAttribute('width', '586');
+    newImage.setAttribute('height', '587');
+  };
 
   // Открытие и закрытие окна редактирования
   var onUploadEscPress = function (evt) {
@@ -19,18 +29,27 @@
   };
 
   var openUpload = function () {
+    loadImg();
     uploadOverlay.classList.remove('hidden');
     document.addEventListener('keydown', onUploadEscPress);
     window.dialog.slider.classList.add('hidden');
   };
 
+  var resetForm = function () {
+    upload.value = '';
+    image.className = '';
+    image.classList.add(imageName);
+    image.style.removeProperty(window.form.PROP_NAMES[0]);
+    image.style.removeProperty(window.form.PROP_NAMES[1]);
+    window.hash.hashtagInput.value = '';
+    window.hash.commentsInput.value = '';
+    window.form.scaleControlInput.value = window.form.MAX_SIZE + '%';
+  };
+
   var closeUpload = function () {
     uploadOverlay.classList.add('hidden');
     document.removeEventListener('keydown', onUploadEscPress);
-    upload.value = '';
-    image.className = '';
-    image.classList.add('img-upload__preview');
-    image.style.removeProperty('filter');
+    resetForm();
   };
 
   upload.addEventListener('change', function (evt) {
@@ -52,6 +71,8 @@
 
   var closeBigPicture = function () {
     window.dialog.picturePopup.classList.add('hidden');
+    window.bigPicture.socialCommentLoader.removeEventListener('click', window.bigPicture.showCommentsHandler);
+    window.bigPicture.socialCommentLoader.classList.remove('visually-hidden');
     document.removeEventListener('keydown', window.dialog.onPhotoEscPress);
   };
 
@@ -66,8 +87,9 @@
     image: image,
     picturePopup: picturePopup,
     uploadOverlay: uploadOverlay,
+    upload: upload,
 
     closeUpload: closeUpload,
-    onPhotoEscPress: onPhotoEscPress
+    onPhotoEscPress: onPhotoEscPress,
   };
 })();

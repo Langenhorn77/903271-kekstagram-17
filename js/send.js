@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
 // Окно результата загрузки фотографии
   var createResultPopup = function (result) {
     var fragment = document.createDocumentFragment();
@@ -12,7 +11,6 @@
     fragment.appendChild(resultElement);
 
     window.dialog.closeUpload();
-    window.hash.hashtagInput.value = '';
     window.dialog.picturePopup.parentNode.insertBefore(fragment, window.dialog.picturePopup);
   };
 

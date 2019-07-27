@@ -5,11 +5,12 @@
   var HASHTAG_MAX_LENGTH = 19;
   var uploadForm = document.querySelector('.img-upload__form');
   var hashtagInput = uploadForm.querySelector('.text__hashtags');
+  var commentsInput = uploadForm.querySelector('.text__description');
 
   var hashtagsRules = {
     'startString': /^#/,
     'startLength': /^#?[\wа-я]/,
-    'space': /[\wа-я]+#+/
+    'space': /[\wа-яё]+#+/
   };
 
   var CustomValidation = function () {
@@ -83,6 +84,7 @@
   window.hash = {
     uploadForm: uploadForm,
     hashtagInput: hashtagInput,
+    commentsInput: commentsInput,
     CustomValidation: CustomValidation,
   };
 
