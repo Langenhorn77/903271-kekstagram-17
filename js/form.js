@@ -3,34 +3,34 @@
   var MIN_SIZE = 25;
   var MAX_SIZE = 100;
 
-  var PROP_NAMES = [
+  var propertyNames = [
     'filter',
     'transform',
   ];
 
-  var FILTER_CLASSES = {
-    classN: [
+  var FilterProperty = {
+    EFFECT_NAMES: [
       'effects__preview--chrome',
       'effects__preview--sepia',
       'effects__preview--marvin',
       'effects__preview--phobos',
       'effects__preview--heat',
     ],
-    val: [
+    VALUES: [
       'grayscale(',
       'sepia(',
       'invert(',
       'blur(',
       'brightness(',
     ],
-    inc: [
+    NUMBERS: [
       1,
       1,
       100,
       5,
       3,
     ],
-    sum: [
+    SUMS: [
       ')',
       ')',
       '%)',
@@ -56,7 +56,7 @@
   var setStyleProperty = function (arg) {
     currentImageSize = 'scale(' + (arg / MAX_SIZE) + ',' + (arg / MAX_SIZE) + ')';
     scaleControlInput.value = arg + '%';
-    window.utils.changeStyle(window.dialog.image, PROP_NAMES[1], currentImageSize);
+    window.utils.changeStyle(window.dialog.image, propertyNames[1], currentImageSize);
   };
 
   var setCurrentSize = function (evt) {
@@ -105,9 +105,9 @@
       pin.style.left = depth.style.width = x * 100 + '%';
 
       var effectLevel = x.toFixed(2);
-      for (var i = 0; i < FILTER_CLASSES.classN.length; i++) {
-        if (window.utils.findMatch(window.dialog.image, FILTER_CLASSES.classN[i])) {
-          window.utils.changeStyle(window.dialog.image, PROP_NAMES[0], FILTER_CLASSES.val[i] + effectLevel * FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
+      for (var i = 0; i < FilterProperty.EFFECT_NAMES.length; i++) {
+        if (window.utils.findMatch(window.dialog.image, FilterProperty.EFFECT_NAMES[i])) {
+          window.utils.changeStyle(window.dialog.image, propertyNames[0], FilterProperty.VALUES[i] + effectLevel * FilterProperty.NUMBERS[i] + FilterProperty.SUMS[i]);
         }
       }
     };
@@ -119,7 +119,7 @@
     });
   });
 
-  var onFilterPreviewChange = function (evt) {
+  var filterPreviewChangeHandler = function (evt) {
     evt.preventDefault();
     var target = evt.target;
     if (window.utils.findMatch(target, 'effects__preview--none')) {
@@ -128,22 +128,22 @@
       window.dialog.slider.classList.add('hidden');
       window.dialog.image.style.removeProperty('filter');
     } else {
-      for (var i = 0; i < FILTER_CLASSES.classN.length; i++) {
-        if (window.utils.findMatch(target, FILTER_CLASSES.classN[i])) {
+      for (var i = 0; i < FilterProperty.EFFECT_NAMES.length; i++) {
+        if (window.utils.findMatch(target, FilterProperty.EFFECT_NAMES[i])) {
           window.utils.removeStyle(window.dialog.image, lastStyle);
-          lastStyle = FILTER_CLASSES.classN[i];
+          lastStyle = FilterProperty.EFFECT_NAMES[i];
           window.dialog.image.classList.add(lastStyle);
-          window.utils.changeStyle(window.dialog.image, PROP_NAMES[0], FILTER_CLASSES.val[i] + FILTER_CLASSES.inc[i] + FILTER_CLASSES.sum[i]);
+          window.utils.changeStyle(window.dialog.image, propertyNames[0], FilterProperty.VALUES[i] + FilterProperty.NUMBERS[i] + FilterProperty.SUMS[i]);
           movePinMax();
         }
       }
     }
   };
-  effectList.addEventListener('click', onFilterPreviewChange);
+  effectList.addEventListener('click', filterPreviewChangeHandler);
 
   window.form = {
     scaleControlInput: scaleControlInput,
-    PROP_NAMES: PROP_NAMES,
+    propertyNames: propertyNames,
     MAX_SIZE: MAX_SIZE,
   };
 })();

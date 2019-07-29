@@ -56,7 +56,7 @@
     }
     window.dialog.picturePopup.classList.remove('hidden');
     socialCommentCount.classList.add('visually-hidden');
-    document.addEventListener('keydown', window.dialog.onPhotoEscPress);
+    document.addEventListener('keydown', window.dialog.photoEscPressHandler);
 
     socialCommentLoader.addEventListener('click', showCommentsHandler);
   };
