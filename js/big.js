@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var COMMENTS_QUANTITY = 5;
   var imageBigPicture = window.dialog.picturePopup.querySelector('.big-picture__img > img');
   var likesCount = window.dialog.picturePopup.querySelector('.likes-count');
   var commentsCount = window.dialog.picturePopup.querySelector('.comments-count');
@@ -30,15 +31,40 @@
     renderComment(data);
   };
 
-  var openBigPicture = function (data) {
-    renderBigPicture(data);
-    window.dialog.picturePopup.classList.remove('hidden');
-    socialCommentCount.classList.add('visually-hidden');
-    socialCommentLoader.classList.add('visually-hidden');
-    document.addEventListener('keydown', window.dialog.onPhotoEscPress);
+  var showCommentsHandler = function () {
+    var socialCommentsHidden = window.dialog.picturePopup.querySelectorAll('.social__comment.visually-hidden');
+    if (socialCommentsHidden.length > COMMENTS_QUANTITY) {
+      for (var j = 0; j < COMMENTS_QUANTITY; j++) {
+        socialCommentsHidden[j].classList.remove('visually-hidden');
+      }
+    } else {
+      for (var n = 0; n < socialCommentsHidden.length; n++) {
+        socialCommentsHidden[n].classList.remove('visually-hidden');
+        socialCommentLoader.classList.add('visually-hidden');
+      }
+    }
   };
 
+  var openBigPicture = function (data) {
+    renderBigPicture(data);
+    var socialComments = window.dialog.picturePopup.querySelectorAll('.social__comment');
+    if (socialComments.length < COMMENTS_QUANTITY) {
+      socialCommentLoader.classList.add('visually-hidden');
+    }
+    for (var i = COMMENTS_QUANTITY; i < socialComments.length; i++) {
+      socialComments[i].classList.add('visually-hidden');
+    }
+    window.dialog.picturePopup.classList.remove('hidden');
+    socialCommentCount.classList.add('visually-hidden');
+    document.addEventListener('keydown', window.dialog.photoEscPressHandler);
+
+    socialCommentLoader.addEventListener('click', showCommentsHandler);
+  };
+
+
   window.bigPicture = {
-    open: openBigPicture
+    open: openBigPicture,
+    showCommentsHandler: showCommentsHandler,
+    socialCommentLoader: socialCommentLoader,
   };
 })();

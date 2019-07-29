@@ -4,7 +4,7 @@
 
   // Перемнные для маленьких фотографий
   var PHOTO_NUMBER = 25;
-  var pictureTemplate = document.getElementById('picture')
+  var pictureTemplate = document.querySelector('#picture')
     .content
     .querySelector('.picture');
   var fragment = document.createDocumentFragment();
@@ -12,7 +12,7 @@
 
   // Переменные для увеличенных фотографий
   var filterImage = document.querySelector('.img-filters');
-  var picturesListElement = document.querySelector('.pictures');
+  var photoListElement = document.querySelector('.pictures');
 
   var renderPicture = function (picture) {
     var pictureElement = pictureTemplate.cloneNode(true);
@@ -33,13 +33,13 @@
       fragment.appendChild(renderPicture(item));
     });
 
-    picturesListElement.appendChild(fragment);
+    photoListElement.appendChild(fragment);
   };
 
   window.picture = {
     PHOTO_NUMBER: PHOTO_NUMBER,
     filterImage: filterImage,
-    photoListElement: picturesListElement,
+    photoListElement: photoListElement,
     renderUserPhotos: renderUserPhotos
   };
 })();

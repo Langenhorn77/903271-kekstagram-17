@@ -29,11 +29,6 @@ window.utils = {
     return el.getBoundingClientRect();
   },
 
-  // Функия создания нового элемента
-  newElement: function (el, arg) {
-    return el.appendChild(arg);
-  },
-
   // Устранение дребезга
   debounce: function (cb, timeout, interval) {
     if (timeout) {
@@ -42,7 +37,7 @@ window.utils = {
     timeout = window.setTimeout(cb, interval);
   },
 
-  shuffleArray: function shuffle(array) {
+  shuffleArray: function (array) {
     var j;
     var x;
     var i;
