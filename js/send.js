@@ -4,14 +4,14 @@
 // Окно результата загрузки фотографии
   var createResultPopup = function (result) {
     var fragment = document.createDocumentFragment();
-    var resultTemplate = document.getElementById(result)
+    var resultTemplate = document.querySelector('#' + result)
       .content
       .querySelector('.' + result);
     var resultElement = resultTemplate.cloneNode(true);
     fragment.appendChild(resultElement);
 
     window.dialog.closeUpload();
-    window.dialog.picturePopup.parentNode.insertBefore(fragment, window.dialog.picturePopup);
+    window.big.picturePopup.parentNode.insertBefore(fragment, window.big.picturePopup);
   };
 
 
@@ -54,10 +54,10 @@
 
   window.hash.uploadForm.addEventListener('submit', function (evt) {
     var inputCustomValidation = new window.hash.CustomValidation(); // Создадим объект CustomValidation
-    var isIncorrect = !inputCustomValidation.checkValidity(window.hash.hashtagInput);
+    var isIncorrect = !inputCustomValidation.checkValidity(window.hash.userInput);
     if (isIncorrect) {
       var customValidityMessageForHTML = inputCustomValidation.getInvaliditiesForHTML();
-      window.hash.hashtagInput.insertAdjacentHTML('afterend', '<p class="error-message">' + customValidityMessageForHTML + '</p>');
+      window.hash.userInput.insertAdjacentHTML('afterend', '<p class="error-message">' + customValidityMessageForHTML + '</p>');
       evt.preventDefault();
     } else {
       evt.preventDefault();
