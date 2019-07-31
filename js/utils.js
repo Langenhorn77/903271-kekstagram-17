@@ -4,11 +4,6 @@
 
   window.utils = {
 
-    // Функция случайного значения
-    getRandomIndex: function (min, max) {
-      return min + Math.floor(Math.random() * (max + 1 - min));
-    },
-
     // Проверка наличия
     findMatch: function (el, item) {
       return (el.classList.contains(item));
