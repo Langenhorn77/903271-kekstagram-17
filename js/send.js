@@ -1,14 +1,14 @@
 'use strict';
 
 (function () {
-// Окно результата загрузки фотографии
+  // Создание окна результата загрузки фотографии
   var createResultPopup = function (result) {
     var fragment = document.createDocumentFragment();
     var resultTemplate = document.querySelector('#' + result)
       .content
       .querySelector('.' + result);
-    var resultElement = resultTemplate.cloneNode(true);
-    fragment.appendChild(resultElement);
+    var resultItem = resultTemplate.cloneNode(true);
+    fragment.appendChild(resultItem);
 
     window.dialog.closeUpload();
     window.big.picturePopup.parentNode.insertBefore(fragment, window.big.picturePopup);

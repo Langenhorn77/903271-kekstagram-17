@@ -1,8 +1,8 @@
 'use strict';
-// Рендер фотографий
-(function () {
 
-  // Перемнные для маленьких фотографий
+(function () {
+  // Рендер фотографий
+
   var CONTENT_NUMBER = 25;
   var pictureTemplate = document.querySelector('#picture')
     .content
@@ -10,7 +10,6 @@
   var fragment = document.createDocumentFragment();
 
 
-  // Переменные для увеличенных фотографий
   var ListItem = document.querySelector('.pictures');
 
   var renderPicture = function (picture) {
@@ -38,6 +37,6 @@
   window.picture = {
     CONTENT_NUMBER: CONTENT_NUMBER,
     ListItem: ListItem,
-    renderContent: renderContent
+    renderContent: renderContent,
   };
 })();

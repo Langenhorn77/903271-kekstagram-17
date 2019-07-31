@@ -68,9 +68,9 @@
   var validationInputHandler = function (evt) {
     if (!(evt.target.value === '')) {
       evt.target.setCustomValidity('');
-      var errorElement = uploadForm.querySelector('.error-message');
-      if (errorElement) {
-        errorElement.remove();
+      var errorMessage = uploadForm.querySelector('.error-message');
+      if (errorMessage) {
+        errorMessage.remove();
       }
       CustomValidation.prototype.invalidities = [];
     }

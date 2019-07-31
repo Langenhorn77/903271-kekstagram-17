@@ -5,7 +5,7 @@
   var END_OF_STRING = ' из ';
   var picturePopup = document.querySelector('.big-picture');
   var imageBigPicture = picturePopup.querySelector('.big-picture__img > img');
-  var bigPictureCancel = document.querySelector('.big-picture__cancel');
+  var bigPictureCancel = picturePopup.querySelector('.big-picture__cancel');
 
   var likesCount = picturePopup.querySelector('.likes-count');
   var commentsCount = picturePopup.querySelector('.comments-count');
