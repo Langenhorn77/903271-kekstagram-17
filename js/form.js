@@ -40,6 +40,7 @@
   };
   var effectList = window.dialog.uploadOverlay.querySelector('.effects__list');
   var effect = window.dialog.uploadOverlay.querySelector('.effect-level');
+  var effectField = effect.querySelector('.effect-level__value');
   var line = effect.querySelector('.effect-level__line');
   var pin = effect.querySelector('.effect-level__pin');
   var depth = effect.querySelector('.effect-level__depth');
@@ -88,6 +89,7 @@
     window.dialog.slider.classList.remove('hidden');
     pin.style.left = '100%';
     depth.style.width = '100%';
+    effectField.value = '100';
   };
 
   pin.addEventListener('mousedown', function (evt) {
@@ -105,6 +107,7 @@
       }
       var x = newLeft / sliderCoords.width;
       pin.style.left = depth.style.width = x * 100 + '%';
+      effectField.value = Math.round(x * 100);
 
       var effectLevel = x.toFixed(2);
       for (var i = 0; i < FilterProperty.EFFECT_NAMES.length; i++) {

@@ -10,19 +10,19 @@
     },
 
     // Проверка наличия
-    findMatch: function (el, classN) {
-      return (el.classList.contains(classN));
+    findMatch: function (el, item) {
+      return (el.classList.contains(item));
     },
 
     // Изменение стиля
-    changeStyle: function (el, styleN, val) {
-      return el.style.setProperty(styleN, val);
+    changeStyle: function (el, style, val) {
+      return el.style.setProperty(style, val);
     },
 
     // Удаление класса
-    removeStyle: function (el, styleN) {
-      if (!(styleN === '')) {
-        el.classList.remove(styleN);
+    removeStyle: function (el, style) {
+      if (!(style === '')) {
+        el.classList.remove(style);
       }
     },
 
