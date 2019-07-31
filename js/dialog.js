@@ -1,7 +1,6 @@
 'use strict';
 (function () {
 
-  /* Загрузка изображения */
   var ESC_KEYCODE = 27;
   var upload = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -68,6 +67,7 @@
     ESC_KEYCODE: ESC_KEYCODE,
     slider: slider,
     image: image,
+    uploadOverlay: uploadOverlay,
 
     closeUpload: closeUpload,
   };

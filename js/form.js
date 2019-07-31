@@ -38,16 +38,18 @@
       ')',
     ],
   };
-  var effectList = document.querySelector('.effects__list');
-  var line = document.querySelector('.effect-level__line');
-  var pin = document.querySelector('.effect-level__pin');
-  var depth = document.querySelector('.effect-level__depth');
-  var lastStyle = '';
+  var effectList = window.dialog.uploadOverlay.querySelector('.effects__list');
+  var effect = window.dialog.uploadOverlay.querySelector('.effect-level');
+  var line = effect.querySelector('.effect-level__line');
+  var pin = effect.querySelector('.effect-level__pin');
+  var depth = effect.querySelector('.effect-level__depth');
 
-  var scale = document.querySelector('.img-upload__scale');
+  var scale = window.dialog.uploadOverlay.querySelector('.img-upload__scale');
   var scaleControlSmaller = scale.querySelector('.scale__control--smaller');
   var scaleControlBigger = scale.querySelector('.scale__control--bigger');
   var scaleControlInput = scale.querySelector('.scale__control--value');
+
+  var lastStyle = '';
   var newSize;
   var currentImageSize;
 
